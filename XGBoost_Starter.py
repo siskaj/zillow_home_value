@@ -5,9 +5,9 @@ import gc
 
 print('Loading data ...')
 
-train = pd.read_csv('../input/train_2016.csv')
-prop = pd.read_csv('../input/properties_2016.csv')
-sample = pd.read_csv('../input/sample_submission.csv')
+train = pd.read_csv('Data/train_2016_v2.csv')
+prop = pd.read_csv('Data/properties_2016.csv')
+sample = pd.read_csv('Data/sample_submission.csv')
 
 print('Binding to float32')
 
@@ -63,6 +63,7 @@ del prop; gc.collect()
 
 x_test = df_test[train_columns]
 for c in x_test.dtypes[x_test.dtypes == object].index.values:
+#    x_test.loc[:,c] = (x_test[c] == True)
     x_test[c] = (x_test[c] == True)
 
 del df_test, sample; gc.collect()
@@ -77,7 +78,7 @@ p_test = clf.predict(d_test)
 
 del d_test; gc.collect()
 
-sub = pd.read_csv('../input/sample_submission.csv')
+sub = pd.read_csv('Data/sample_submission.csv')
 for c in sub.columns[sub.columns != 'ParcelId']:
     sub[c] = p_test
 
